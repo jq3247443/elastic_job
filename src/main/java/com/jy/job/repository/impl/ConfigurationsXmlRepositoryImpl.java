@@ -17,17 +17,30 @@
 
 package com.jy.job.repository.impl;
 
+import com.jy.job.domain.EventTraceDataSourceConfigurations;
 import com.jy.job.domain.GlobalConfiguration;
+import com.jy.job.domain.RegistryCenterConfiguration;
+import com.jy.job.domain.RegistryCenterConfigurations;
 import com.jy.job.repository.ConfigurationsXmlRepository;
+
+import java.util.Set;
 
 /**
  * 基于XML的全局配置数据访问器实现类.
  *
  * @author zhangliang
  */
-public final class ConfigurationsXmlRepositoryImpl extends AbstractXmlRepositoryImpl<GlobalConfiguration> implements ConfigurationsXmlRepository {
-    
+public final class ConfigurationsXmlRepositoryImpl extends AbstractStatusRepositoryImpl<GlobalConfiguration> implements ConfigurationsXmlRepository {
+
     public ConfigurationsXmlRepositoryImpl() {
-        super("Configurations.xml", GlobalConfiguration.class);
     }
+
+    public ConfigurationsXmlRepositoryImpl(Set<RegistryCenterConfiguration> registryCenterConfigurations, EventTraceDataSourceConfigurations eventTraceDataSourceConfigurations) {
+        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
+        globalConfiguration.setRegistryCenterConfigurations( new RegistryCenterConfigurations(registryCenterConfigurations) );
+        globalConfiguration.setEventTraceDataSourceConfigurations( eventTraceDataSourceConfigurations );
+        super.setGlobalConfiguration( globalConfiguration );
+    }
+
+
 }

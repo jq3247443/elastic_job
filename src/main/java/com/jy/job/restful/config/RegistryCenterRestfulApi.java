@@ -21,9 +21,10 @@ import com.google.common.base.Optional;
 import com.jy.job.domain.RegistryCenterConfiguration;
 import com.jy.job.lifecycle.internal.reg.RegistryCenterFactory;
 import com.jy.job.service.RegistryCenterConfigurationService;
-import com.jy.job.service.impl.RegistryCenterConfigurationServiceImpl;
 import com.jy.job.util.SessionRegistryCenterConfiguration;
 import io.elasticjob.lite.reg.exception.RegException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,22 +37,23 @@ import java.util.Collection;
  *
  * @author caohao
  */
+@Slf4j
 @RestController
 @RequestMapping("/registry-center")
 public final class RegistryCenterRestfulApi {
     
     public static final String REG_CENTER_CONFIG_KEY = "reg_center_config_key";
-    
-    private RegistryCenterConfigurationService regCenterService = new RegistryCenterConfigurationServiceImpl();
+
+    @Autowired
+    private RegistryCenterConfigurationService regCenterService;
     
     /**
      * 判断是否存在已连接的注册中心配置.
      *
-     * @param request HTTP请求
      * @return 是否存在已连接的注册中心配置
      */
     @RequestMapping("/activated")
-    public boolean activated( HttpServletRequest request) {
+    public boolean activated() {
         return regCenterService.loadActivated().isPresent();
     }
     
@@ -78,6 +80,7 @@ public final class RegistryCenterRestfulApi {
      */
     @RequestMapping( "/add" )
     public boolean add(final RegistryCenterConfiguration config) {
+        log.debug( "registry-center add {}", config );
         return regCenterService.add(config);
     }
     

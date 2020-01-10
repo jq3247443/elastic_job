@@ -22,18 +22,21 @@ import com.jy.job.domain.GlobalConfiguration;
 import com.jy.job.domain.RegistryCenterConfiguration;
 import com.jy.job.domain.RegistryCenterConfigurations;
 import com.jy.job.repository.ConfigurationsXmlRepository;
-import com.jy.job.repository.impl.ConfigurationsXmlRepositoryImpl;
 import com.jy.job.service.RegistryCenterConfigurationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 注册中心配置服务实现类.
  *
  * @author zhangliang
  */
+@Service
 public final class RegistryCenterConfigurationServiceImpl implements RegistryCenterConfigurationService {
-    
-    private ConfigurationsXmlRepository configurationsXmlRepository = new ConfigurationsXmlRepositoryImpl();
-    
+
+    @Autowired
+    private ConfigurationsXmlRepository configurationsXmlRepository;
+
     @Override
     public RegistryCenterConfigurations loadAll() {
         return loadGlobal().getRegistryCenterConfigurations();

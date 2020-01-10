@@ -19,8 +19,9 @@ package com.jy.job.restful.config;
 
 import com.jy.job.lifecycle.domain.JobSettings;
 import com.jy.job.service.JobAPIService;
-import com.jy.job.service.impl.JobAPIServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,8 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/jobs/config")
 public final class LiteJobConfigRestfulApi {
-    
-    private JobAPIService jobAPIService = new JobAPIServiceImpl();
+
+    @Autowired
+    private JobAPIService jobAPIService;
     
     /**
      * 获取作业配置.
@@ -41,7 +43,7 @@ public final class LiteJobConfigRestfulApi {
      * @param jobName 作业名称
      * @return 作业配置
      */
-    @RequestMapping("/{jobName}")
+    @RequestMapping("/{jobName:.+}")
     public JobSettings getJobSettings(@PathVariable("jobName") final String jobName) {
         return jobAPIService.getJobSettingsAPI().getJobSettings(jobName);
     }
@@ -52,7 +54,7 @@ public final class LiteJobConfigRestfulApi {
      * @param jobSettings 作业配置
      */
     @RequestMapping
-    public void updateJobSettings(final JobSettings jobSettings) {
+    public void updateJobSettings( @RequestBody final JobSettings jobSettings) {
         jobAPIService.getJobSettingsAPI().updateJobSettings(jobSettings);
     }
     

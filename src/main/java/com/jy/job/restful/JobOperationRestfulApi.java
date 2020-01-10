@@ -85,7 +85,7 @@ public final class JobOperationRestfulApi {
      *
      * @param jobName 作业名称
      */
-//    @RequestMapping("/{jobName}/disable")
+    @RequestMapping("/{jobName}/enable")
     public void enableJob(@PathVariable("jobName") final String jobName) {
         jobAPIService.getJobOperatorAPI().enable(Optional.of(jobName), Optional.<String>absent());
     }

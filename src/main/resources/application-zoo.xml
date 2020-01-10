@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    	">
+
+    <context:property-placeholder location="classpath:zookeeper.properties"/>
+
+    <bean id="configuration" class="io.elasticjob.lite.reg.zookeeper.ZookeeperConfiguration">
+        <constructor-arg index="0" value="${zoo.address}" />
+        <constructor-arg index="1" value="${zoo.namespace}" />
+    </bean>
+
+    <bean id="center" class="io.elasticjob.lite.reg.zookeeper.ZookeeperRegistryCenter" init-method="init">
+        <constructor-arg index="0" ref="configuration" />
+    </bean>
+
+    <bean id="registryCenterConfiguration" class="com.jy.job.domain.RegistryCenterConfiguration" >
+        <property name="name" value="${zoo.name}"/>
+        <property name="zkAddressList" value="${zoo.address}" />
+        <property name="namespace" value="${zoo.namespace}" />
+        <property name="digest" value=""/>
+        <property name="activated" value="true"/>
+    </bean>
+
+    <bean class="com.jy.job.repository.impl.ConfigurationsXmlRepositoryImpl">
+        <constructor-arg index="0" >
+            <set>
+                <ref bean="registryCenterConfiguration"/>
+            </set>
+        </constructor-arg>
+        <constructor-arg index="1" >
+            <bean class="com.jy.job.domain.EventTraceDataSourceConfigurations" />
+        </constructor-arg>
+    </bean>
+
+</beans>

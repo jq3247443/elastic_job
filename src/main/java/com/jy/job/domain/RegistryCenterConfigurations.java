@@ -36,4 +36,11 @@ import java.util.Set;
 public final class RegistryCenterConfigurations {
     
     private Set<RegistryCenterConfiguration> registryCenterConfiguration = new LinkedHashSet<>();
+
+    public RegistryCenterConfigurations() {
+    }
+
+    public RegistryCenterConfigurations(Set<RegistryCenterConfiguration> registryCenterConfiguration) {
+        this.registryCenterConfiguration = registryCenterConfiguration;
+    }
 }

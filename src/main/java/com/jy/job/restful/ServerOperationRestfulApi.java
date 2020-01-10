@@ -21,7 +21,7 @@ import com.google.common.base.Optional;
 import com.jy.job.lifecycle.domain.JobBriefInfo;
 import com.jy.job.lifecycle.domain.ServerBriefInfo;
 import com.jy.job.service.JobAPIService;
-import com.jy.job.service.impl.JobAPIServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,8 +36,9 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/servers")
 public final class ServerOperationRestfulApi {
-    
-    private JobAPIService jobAPIService = new JobAPIServiceImpl();
+
+    @Autowired
+    private JobAPIService jobAPIService;
     
     /**
      * 获取服务器总数.

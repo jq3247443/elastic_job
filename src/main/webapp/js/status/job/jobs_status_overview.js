@@ -149,7 +149,7 @@ function bindEnableButton() {
     $(document).on("click", "button[operation='enable-job'][data-toggle!='modal']", function(event) {
         var jobName = $(event.currentTarget).attr("job-name");
         $.ajax({
-            url: "api/jobs/" + jobName + "/disable",
+            url: "api/jobs/" + jobName + "/enable",
             type: "DELETE",
             success: function() {
                 showSuccessDialog();
